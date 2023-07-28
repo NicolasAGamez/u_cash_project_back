@@ -14,9 +14,9 @@ const dbConfig = {
   const connection = mysql.createConnection(dbConfig);
 connection.connect((err) => {
   if (err) {
-    console.error('Error connecting to the database:', err);
+    console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Connected to MySQL database successfully!');
+    console.log('Conexión con el servidor MySQL realizada!');
   }
 });
 
@@ -25,8 +25,8 @@ router.get('/customers', (req, res) => {
   const sql = 'SELECT * FROM customers';
   connection.query(sql, (err, results) => {
     if (err) {
-      console.error('Error fetching data from the database:', err);
-      return res.status(500).json({ error: 'Error fetching data from the database' });
+      console.error('Error obteniendo datos del servidor:', err);
+      return res.status(500).json({ error: 'Error obteniendo datos del servidor' });
     }
     return res.status(200).json(results);
   });

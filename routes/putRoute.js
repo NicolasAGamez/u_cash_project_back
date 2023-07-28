@@ -14,9 +14,9 @@ const dbConfig = {
   const connection = mysql.createConnection(dbConfig);
   connection.connect((err) => {
     if (err) {
-      console.error('Error connecting to the database:', err);
+      console.error('Error conectando con la base de datos', err);
     } else {
-      console.log('Connected to MySQL database successfully!');
+      console.log('Conexión con el servidor MySQL realizada!');
     }
   });
   
@@ -27,13 +27,13 @@ const dbConfig = {
     const sql = 'UPDATE customers SET name = ?, email = ?, cell = ? WHERE id = ?';
     connection.query(sql, [formData.nameUser, formData.email, formData.celphoneNumber, customerId], (err, result) => {
       if (err) {
-        console.error('Error updating data in the database:', err);
-        return res.status(500).json({ error: 'Error updating data in the database' });
+        console.error('Error actualizando los datos en el servidor:', err);
+        return res.status(500).json({ error: 'Error actualizando los datos en el servidor' });
       }
       if (result.affectedRows === 0) {
-        return res.status(404).json({ message: 'Customer not found' });
+        return res.status(404).json({ message: 'Cliente no encontrado' });
       }
-      return res.status(200).json({ message: 'Customer updated successfully' });
+      return res.status(200).json({ message: 'Cliente actualizado con éxito' });
     });
   });
   

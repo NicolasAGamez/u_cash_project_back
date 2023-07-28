@@ -14,9 +14,9 @@ const dbConfig = {
 const connection = mysql.createConnection(dbConfig);
 connection.connect((err) => {
   if (err) {
-    console.error('Error connecting to the database:', err);
+    console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Connected to MySQL database successfully!');
+    console.log('Conexión con el servidor MySQL realizada!');
   }
 });
 
@@ -26,13 +26,13 @@ router.delete('/delete/:id', (req, res) => {
   const sql = 'DELETE FROM customers WHERE id = ?';
   connection.query(sql, [customerId], (err, result) => {
     if (err) {
-      console.error('Error deleting data from the database:', err);
-      return res.status(500).json({ error: 'Error deleting data from the database' });
+      console.error('Error eliminando datos del servidos:', err);
+      return res.status(500).json({ error: 'Error eliminando datos del servidos' });
     }
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Customer not found' });
+      return res.status(404).json({ message: 'Cliente no encontrado' });
     }
-    return res.status(200).json({ message: 'Customer deleted successfully' });
+    return res.status(200).json({ message: 'Cliente eliminado correctamente' });
   });
 });
 

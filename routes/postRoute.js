@@ -14,9 +14,9 @@ const dbConfig = {
 const connection = mysql.createConnection(dbConfig);
 connection.connect((err) => {
   if (err) {
-    console.error('Error connecting to the database:', err);
+    console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Connected to MySQL database successfully!');
+    console.log('Conexión con el servidor MySQL realizada!');
   }
 });
 
@@ -25,12 +25,20 @@ router.post('/register', (req, res) => {
   const formData = req.body; // Los datos del formulario se envían como un objeto JSON
   const sql = 'INSERT INTO customers (name, email, cell) VALUES (?, ?, ?)';
   connection.query(sql, [formData.nameUser, formData.email, formData.celphoneNumber], (err, result) => {
-    if (err) {
-      console.error('Error inserting data into the database:', err);
-      return res.status(500).json({ error: 'Error inserting data into the database' });
-    }
-    return res.status(201).json({ message: 'Data inserted successfully' });
+    if (err){ 
+      if (err.code === 'ER_DUP_ENTRY'){
+        console.error(err.stack)
+        res.status(409).send('El email ya esta en uso.  Por favor usa un correo diferente');
+    
+      } else {
+        console.error('Error insertando los datos en el servidor:', err);
+        res.status(500).send('Error insertando los datos en el servidor');
+      }
+  } else {
+    return res.status(201).json({ message: 'Datos creados correctamente en el servidor' });
+  }
   });
+
 });
 
 module.exports = router;
