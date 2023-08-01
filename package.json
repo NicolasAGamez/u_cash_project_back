@@ -65,6 +65,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.5.2",
     "negotiator": "^0.6.3",
+    "nodemailer": "^6.9.4",
     "nodemon": "^3.0.1",
     "nopt": "^1.0.10",
     "normalize-path": "^3.0.0",
