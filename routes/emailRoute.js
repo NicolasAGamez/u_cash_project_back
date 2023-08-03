@@ -37,11 +37,11 @@ router.post('/otpVerification', (req, res) => {
 
     if (result && result.length > 0) {
       // OTP verification successful
-      // In your actual implementation, you can update the user's record to mark their email as verified
       return res.status(200).json({ verified: true });
     } else {
       // OTP verification failed
-      return res.status(400).json({ verified: false });
+      console.error('Error, the OTP was not that:', err);
+      return res.status(455).json({ verified: false });
     }
   });
 });
