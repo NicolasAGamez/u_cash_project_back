@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router(); 
 const mysql = require('mysql2');
+const { sendOTPToEmail } = require('./sendOTP'); // Import the sendOTPToEmail function from sendOTP.js
 
 // configuración de la base de datos MySQL
 const dbConfig = {
@@ -16,20 +17,15 @@ connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor MySQL realizada!');
+    console.log('Conexión con el servidor POST MySQL realizada!');
   }
 });
 
-function generateVerificationCode() {
-  return Math.floor(100000 + Math.random() * 900000);
-}
 
 // POST API 
 router.post('/register', (req, res) => {
   const formData = req.body; // Los datos del formulario se envían como un objeto JSON
 
-  // Generar un código de verificación de 6 dígitos
-  //const verificationCode = generateVerificationCode();
 
   const sql = 'INSERT INTO customers (name, email, cell) VALUES (?, ?, ?)';
   connection.query(sql, [formData.nameUser, formData.email, formData.celphoneNumber], (err, result) => {  // formData.nameUser, formData.email, formData.celphoneNumber, verificationCode
@@ -43,9 +39,10 @@ router.post('/register', (req, res) => {
         res.status(500).send('Error insertando los datos en el servidor');
       }
   } else {
-    //sendVerificationEmail(formData.email, verificationCode);
+     // Sending OTP via email
+      const otp = sendOTPToEmail(formData.email);
 
-    return res.status(201).json({ message: 'Datos creados correctamente en el servidor' });
+      return res.status(201).json({ message: 'Datos creados correctamente en el servidor' });
   }
   });
 

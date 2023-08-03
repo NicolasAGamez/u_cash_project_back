@@ -16,7 +16,7 @@ const dbConfig = {
     if (err) {
       console.error('Error conectando con la base de datos', err);
     } else {
-      console.log('Conexión con el servidor MySQL realizada!');
+      console.log('Conexión con el servidor PUT MySQL realizada!');
     }
   });
   

@@ -14,12 +14,14 @@ const postRoute = require('./routes/postRoute');
 const deleteRoute = require('./routes/deleteRoute');
 const getRoute = require('./routes/getRoute');
 const putRoute = require('./routes/putRoute');
+const emailRoute = require('./routes/emailRoute');
 
 // Usar las rutas
 app.use('/api', postRoute);
 app.use('/api', deleteRoute);
 app.use('/api', getRoute);
 app.use('/api', putRoute);
+app.use('/api', emailRoute);
 
 // Iniciar el servidor
 app.listen(port, () => {

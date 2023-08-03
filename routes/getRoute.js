@@ -16,7 +16,7 @@ connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor MySQL realizada!');
+    console.log('Conexión con el servidor GET MySQL realizada!');
   }
 });
 
