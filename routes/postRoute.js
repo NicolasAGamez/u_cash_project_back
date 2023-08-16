@@ -27,8 +27,8 @@ router.post('/register', (req, res) => {
   const formData = req.body; // Los datos del formulario se envían como un objeto JSON
 
 
-  const sql = 'INSERT INTO customers (name, email, cell) VALUES (?, ?, ?)';
-  connection.query(sql, [formData.nameUser, formData.email, formData.celphoneNumber], (err, result) => {  // formData.nameUser, formData.email, formData.celphoneNumber, verificationCode
+  const sql = 'INSERT INTO customers (name, email, cell, city, address) VALUES (?, ?, ?, ?)';
+  connection.query(sql, [formData.nameUser, formData.email, formData.celphoneNumber, city, address], (err, result) => {  // formData.nameUser, formData.email, formData.celphoneNumber, verificationCode
     if (err){ 
       if (err.code === 'ER_DUP_ENTRY'){
         console.error(err.stack)
