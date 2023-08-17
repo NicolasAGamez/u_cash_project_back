@@ -6,7 +6,7 @@ const app = express();
 // GET CIIU CODES API
 router.get('/ciiu-codes', async (req, res) => {
     try {
-        const response = await axios.get('https://raw.githubusercontent.com/NicolasAGamez/CountryCodes/master/output.json');
+        const response = await axios.get('https://raw.githubusercontent.com/NicolasAGamez/CountryCodes/master/outputt.json');
         const data = response.data;
 
         const mobileCodes = data.map(item => ({
