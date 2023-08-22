@@ -26,9 +26,9 @@ connection.connect((err) => {
 router.post('/register', (req, res) => {
   const formData = req.body; // Los datos del formulario se envían como un objeto JSON
 
-
-  const sql = 'INSERT INTO customers (name, email, cell, city, address) VALUES (?, ?, ?, ?)';
-  connection.query(sql, [formData.nameUser, formData.email, formData.celphoneNumber, city, address], (err, result) => {  // formData.nameUser, formData.email, formData.celphoneNumber, verificationCode
+  const personType = formData.personType || 'Legal';
+  const sql = 'INSERT INTO customers (name, identification, nit, city, address, cell, email, person_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  connection.query(sql, [formData.nameUser, formData.identification, formData.nit, formData.city, formData.address, formData.celphoneNumber, formData.email, personType], (err, result) => {  
     if (err){ 
       if (err.code === 'ER_DUP_ENTRY'){
         console.error(err.stack)
@@ -40,7 +40,7 @@ router.post('/register', (req, res) => {
       }
   } else {
      // Sending OTP via email
-      const otp = sendOTPToEmail(formData.email);
+      //const otp = sendOTPToEmail(formData.email);
 
       return res.status(201).json({ message: 'Datos creados correctamente en el servidor' });
   }

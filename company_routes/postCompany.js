@@ -25,40 +25,42 @@ router.post('/company', (req, res) => {
     const newCompany = req.body;
     const {
         companyNit,
-        companyName,
-        companyKindOfSociety,
-        companyCellPhone,
+        nameCompany,
+        TypeSociety,
+        codeTelephone,
+        telephone,
+        codeCellPhone,
+        cellPhone,
         companyAddress,
-        companyNumEmployees,
-        companyAnnualIncome,
-        companyAnnualExpenditures,
-        companyTotalAssets,
-        companyTotalLiabilities,
-        companyConstitutionDate,
-        companyCiiu,
-        companyCountriesObligedToTax,
-        companyTradingCurrencies,
-        companyVirtualCurrencies
+        numEmployees,
+        annualIncome,
+        annualExpenditures,
+        totalAssets,
+        totalLiabilities,
+        equityTotal,
+        constitutionDate,
+        companyCiiu
      } = newCompany;
     
-    const sql = 'INSERT INTO company_info (nit, company_name, kind_of_society, cell_phone, company_address, num_employees, annual_income, annual_expenditures, total_assets, total_liabilities, constitution_date, ciiu, countries_obliged_to_tax, trading_currencies, virtual_currencies) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO company_info (nit, company_name, kind_of_society, code_telephone, telephone, code_cell_phone, cell_phone, company_address, num_employees, annual_income, annual_expenditures, total_assets, total_liabilities, equity_total, constitution_date, ciiu) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     
     const values = [
-        companyNit,
-        companyName,
-        companyKindOfSociety,
-        companyCellPhone,
-        companyAddress,
-        companyNumEmployees,
-        companyAnnualIncome,
-        companyAnnualExpenditures,
-        companyTotalAssets,
-        companyTotalLiabilities,
-        companyConstitutionDate,
-        companyCiiu,
-        companyCountriesObligedToTax,
-        companyTradingCurrencies,
-        companyVirtualCurrencies
+      companyNit,
+      nameCompany,
+      TypeSociety,
+      codeTelephone,
+      telephone,
+      codeCellPhone,
+      cellPhone,
+      companyAddress,
+      numEmployees,
+      annualIncome,
+      annualExpenditures,
+      totalAssets,
+      totalLiabilities,
+      equityTotal,
+      constitutionDate,
+      companyCiiu
      ];
   
     connection.query(sql, values, (err, result) => {

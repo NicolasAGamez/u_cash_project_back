@@ -6,6 +6,7 @@ CREATE TABLE company_info (
      nit VARCHAR(20) PRIMARY KEY,
      company_name VARCHAR(255) NOT NULL,
      kind_of_society VARCHAR(50),
+     code_cell_phone VARCHAR (10),
      cell_phone VARCHAR(20),
      company_address VARCHAR(255),
      num_employees INT,
@@ -22,4 +23,4 @@ CREATE TABLE company_info (
 
 DROP TABLE company_info;
 
-SELECT * FROM company_info;
+-- SELECT * FROM company_info ci WHERE nit JOIN customers c WHERE c.nit = ci.nit ORDER BY ASC;
