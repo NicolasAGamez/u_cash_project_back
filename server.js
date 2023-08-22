@@ -27,6 +27,18 @@ const getCompanyType = require('./dropdown_routes/companyType');
 const getCountryCode = require('./dropdown_routes/countryCodes');
 const getCiiuCode = require('./dropdown_routes/ciuuCodes');
 
+// Incluir rutas de contratos
+const postContract = require('./contract_routes/postContract');
+const deleteContract = require('./contract_routes/deleteContract');
+const getContract = require('./contract_routes/getContract');
+const putContract = require('./contract_routes/putContract');
+
+// Usar las rutas de contrato
+app.use('/api', postContract);
+app.use('/api', deleteContract);
+app.use('/api', getContract);
+app.use('/api', putContract);
+
 // Usar las rutas de dropdowns
 app.use('/api', getCompanyType);
 app.use('/api', getCountryCode);
