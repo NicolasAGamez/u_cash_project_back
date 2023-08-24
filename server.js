@@ -33,6 +33,18 @@ const deleteContract = require('./contract_routes/deleteContract');
 const getContract = require('./contract_routes/getContract');
 const putContract = require('./contract_routes/putContract');
 
+// Incluir rutas de referencias
+const postReferences = require('./reference_routes/postReferences');
+const deleteReferences = require('./reference_routes/deleteReferences');
+const getReferences = require('./reference_routes/getReferences');
+const putReferences = require('./reference_routes/putReferences');
+
+// Usar las rutas de referencias
+app.use('/api', postReferences);
+app.use('/api', deleteReferences);
+app.use('/api', getReferences);
+app.use('/api', putReferences);
+
 // Usar las rutas de contrato
 app.use('/api', postContract);
 app.use('/api', deleteContract);
