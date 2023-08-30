@@ -39,6 +39,12 @@ const deleteReferences = require('./reference_routes/deleteReferences');
 const getReferences = require('./reference_routes/getReferences');
 const putReferences = require('./reference_routes/putReferences');
 
+// Incluir ruta de intereses
+const getInterest = require('./interest_routes/getInterest');
+
+// Usar la ruta de intereses
+app.use('/api', getInterest);
+
 // Usar las rutas de referencias
 app.use('/api', postReferences);
 app.use('/api', deleteReferences);
