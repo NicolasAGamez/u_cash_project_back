@@ -25,6 +25,7 @@ const putCompany = require('./company_routes/putCompany');
 const getCompanyType = require('./dropdown_routes/companyType');
 const getCountryCode = require('./dropdown_routes/countryCodes');
 const getCiiuCode = require('./dropdown_routes/ciuuCodes');
+const getContractType = require('./dropdown_routes/contractTypes');
 
 // Incluir rutas de contratos
 const postContract = require('./contract_routes/postContract');
@@ -37,6 +38,12 @@ const postReferences = require('./reference_routes/postReferences');
 const deleteReferences = require('./reference_routes/deleteReferences');
 const getReferences = require('./reference_routes/getReferences');
 const putReferences = require('./reference_routes/putReferences');
+
+// Incluir ruta de intereses
+const getInterest = require('./interest_routes/getInterest');
+
+// Usar la ruta de intereses
+app.use('/api', getInterest);
 
 // Usar las rutas de referencias
 app.use('/api', postReferences);
@@ -54,6 +61,7 @@ app.use('/api', putContract);
 app.use('/api', getCompanyType);
 app.use('/api', getCountryCode);
 app.use('/api', getCiiuCode);
+app.use('/api', getContractType);
 
 // Usar las rutas de empresas
 app.use('/api', postCompany);
