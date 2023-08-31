@@ -24,10 +24,10 @@ connection.connect((err) => {
 // POST API para referencias
 router.post('/references', (req, res) => {
     const formData = req.body; // Form data sent as a JSON object
-    const reference1Values = [formData.nit, formData.nameReference1, formData.cellNumberReference1, formData.emailReference1];
+    const reference1Values = [formData.cc, formData.nameReference1, formData.cellNumberReference1, formData.emailReference1];
 
    // Consulta SQL para verificar duplicados en cualquiera de las columnas
-   const checkDuplicateSql = `SELECT COUNT(*) AS count FROM customers_references WHERE nit = ? OR name = ? OR cell = ? OR email = ?`;
+   const checkDuplicateSql = `SELECT COUNT(*) AS count FROM customers_references WHERE cc = ? OR name = ? OR cell = ? OR email = ?`;
 
   connection.query(checkDuplicateSql, reference1Values, (checkErr, checkResult) => {
     if (checkErr) {
@@ -43,19 +43,19 @@ router.post('/references', (req, res) => {
    }
 
    // Si no hay duplicados, proceder con la inserción de referencia 1
-   const reference1Sql = 'INSERT INTO customers_references (nit, name, cell, email) VALUES (?, ?, ?, ?)';
+   const reference1Sql = 'INSERT INTO customers_references (cc, name, cell, email) VALUES (?, ?, ?, ?)';
 
-   connection.query(reference1Sql, reference1Values, (err1, result1) => {
+   connection.query(reference1Sql, reference1Values, (err1) => {
      if (err1) {
        console.error('Error al insertar datos para la referencia 1:', err1);
        return res.status(500).send('Error al insertar datos para la referencia 1');
      }
 
      // Verificar y proceder con la inserción de referencia 2
-     const reference2Values = [formData.nit, formData.nameReference2, formData.cellNumberReference2, formData.emailReference2];
-     const reference2Sql = 'INSERT INTO customers_references (nit, name, cell, email) VALUES (?, ?, ?, ?)';
+     const reference2Values = [formData.cc, formData.nameReference2, formData.cellNumberReference2, formData.emailReference2];
+     const reference2Sql = 'INSERT INTO customers_references (cc, name, cell, email) VALUES (?, ?, ?, ?)';
 
-     connection.query(reference2Sql, reference2Values, (err2, result2) => {
+     connection.query(reference2Sql, reference2Values, (err2) => {
        if (err2) {
          console.error('Error al insertar datos para la referencia 2:', err2);
          return res.status(500).send('Error al insertar datos para la referencia 2');
