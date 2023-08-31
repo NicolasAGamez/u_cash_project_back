@@ -1,12 +1,12 @@
 const express = require('express');
-const router = express.Router(); 
+const router = express.Router();
 const mysql = require('mysql2');
 
 // configuración de la base de datos MySQL
 const dbConfig = {
   host: 'localhost',
   port: 3306,
-  user: 'root', 
+  user: 'root',
   password: 'eHrZp*H0358w',
   database: 'u_cash_customers',
 };
@@ -41,9 +41,9 @@ router.post('/company', (req, res) => {
         constitutionDate,
         companyCiiu
      } = newCompany;
-    
+
     const sql = 'INSERT INTO company_info (nit, company_name, kind_of_society, code_telephone, telephone, code_cell_phone, cell_phone, company_address, num_employees, annual_income, annual_expenditures, total_assets, total_liabilities, equity_total, constitution_date, ciiu) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    
+
     const values = [
       companyNit,
       nameCompany,
@@ -62,14 +62,21 @@ router.post('/company', (req, res) => {
       constitutionDate,
       companyCiiu
      ];
-  
+
     connection.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al agregar datos de la empresa al servidor:', err);
-        return res.status(500).json({ error: 'Error al agregar datos de la empresa al servidor' });
+        if (err.code === 'ER_DUP_ENTRY') {
+          console.error('Error: El valor de Nit ya existe en la base de datos.');
+          res.status(409).json({ error: 'El valor de Nit ya existe en la base de datos.' });
+        } else {
+          console.error('Error al insertar datos:', err.message);
+          res.status(500).json({ error: 'Ocurrió un error al insertar los datos.' });
+        }
+      } else {
+        console.log('Datos insertados con éxito:', result);
+        res.status(201).json({ message: 'Datos insertados con éxito.' });
       }
-      return res.status(201).json({ message: 'Información de la empresa añadida con éxito' });
     });
   });
-  
+
   module.exports = router;
