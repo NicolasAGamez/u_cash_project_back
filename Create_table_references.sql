@@ -1,4 +1,4 @@
--- Cambiar a la base de datos recién creada
+-- Cambiar a la base de datos
 USE u_cash_customers;
 
 -- Crear la tabla de clientes

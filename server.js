@@ -46,6 +46,18 @@ const getInterest = require('./interest_routes/getInterest');
 // Usar la ruta de intereses
 app.use('/api', getInterest);
 
+// Incluir rutas de calculadora
+const postCalculator = require('./calculator_routes/postCalculator');
+const deleteCalculator = require('./calculator_routes/deleteCalculator');
+const getCalculator = require('./calculator_routes/getCalculator');
+const putCalculator = require('./calculator_routes/putCalculator');
+
+// Usar las rutas de calculadora
+app.use('/api', postCalculator);
+app.use('/api', deleteCalculator);
+app.use('/api', getCalculator);
+app.use('/api', putCalculator);
+
 // Usar las rutas de referencias
 app.use('/api', postReferences);
 app.use('/api', deleteReferences);
