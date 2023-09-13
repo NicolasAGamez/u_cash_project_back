@@ -13,5 +13,5 @@ CREATE TABLE contract_info (
 );
 
 SELECT * FROM contract_info;
-
+DELETE FROM contract_info;
 DROP TABLE contract_info;

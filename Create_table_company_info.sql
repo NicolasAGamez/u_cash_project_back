@@ -24,5 +24,6 @@ CREATE TABLE company_info (
 DROP TABLE company_info;
 
 SELECT * FROM company_info;
+DELETE FROM company_info;
 
 -- SELECT * FROM company_info ci WHERE nit JOIN customers c WHERE c.nit = ci.nit ORDER BY ASC;

@@ -13,3 +13,4 @@ CREATE TABLE customers_references (
 DROP TABLE customers_references;
 
 SELECT * FROM customers_references;
+DELETE FROM customers_references;

@@ -21,3 +21,7 @@ CREATE TABLE customers (
 CREATE INDEX idx_customers_name ON customers(name);
 
 
+SELECT * FROM customers;
+DELETE FROM customers;
+
+
