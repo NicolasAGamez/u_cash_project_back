@@ -42,14 +42,32 @@ const putReferences = require('./reference_routes/putReferences');
 // Incluir ruta de intereses
 const getInterest = require('./interest_routes/getInterest');
 
-// Usar la ruta de intereses
-app.use('/api', getInterest);
-
 // Incluir rutas de calculadora
 const postCalculator = require('./calculator_routes/postCalculator');
 const deleteCalculator = require('./calculator_routes/deleteCalculator');
 const getCalculator = require('./calculator_routes/getCalculator');
 const putCalculator = require('./calculator_routes/putCalculator');
+
+// Incluir rutas de la encuesta
+const postSurveyRates = require('./survey_rates_routes/postSurveyRates');
+const deleteSurveyRates = require('./survey_rates_routes/deleteSurveyRates');
+const getSurveyRates = require('./survey_rates_routes/getSurveyRates');
+const putSurveyRates = require('./survey_rates_routes/putSurveyRates');
+
+// Incluir ruta de subir archivos
+const postUploadFiles = require('./upload_files_routes/postUploadFiles');
+
+// Usar la ruta de subir archivos
+app.use('/api', postUploadFiles);
+
+// Usar la ruta de intereses
+app.use('/api', getInterest);
+
+// Usar las rutas de la encuesta
+app.use('/api', postSurveyRates);
+app.use('/api', deleteSurveyRates);
+app.use('/api', getSurveyRates);
+app.use('/api', putSurveyRates);
 
 // Usar las rutas de calculadora
 app.use('/api', postCalculator);

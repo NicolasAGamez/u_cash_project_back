@@ -22,12 +22,13 @@ CREATE TABLE calculator_info (
     fourthPaymentCredit DECIMAL(20, 2)
 );
 
+SELECT * FROM customers;
+SELECT * FROM company_info;
+SELECT * FROM contract_info;
+SELECT * FROM customers_references;
 SELECT * FROM calculator_info;
 
-DELETE FROM calculator_info;
 
-
-DROP TABLE calculator_info;
 
 DELETE FROM customers;
 DELETE FROM company_info;
