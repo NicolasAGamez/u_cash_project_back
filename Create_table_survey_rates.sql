@@ -10,3 +10,5 @@ CREATE TABLE customers_rates_survey (
 );
 
 DROP TABLE customers_rates_survey;
+DELETE FROM customers_rates_survey;
+SELECT * FROM customers_rates_survey;

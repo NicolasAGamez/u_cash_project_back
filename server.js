@@ -57,6 +57,12 @@ const putSurveyRates = require('./survey_rates_routes/putSurveyRates');
 // Incluir ruta de subir archivos
 const postUploadFiles = require('./upload_files_routes/postUploadFiles');
 
+// Incluir ruta de correo de agradecimiento
+const sendFinalEmail = require('./routes/sendFinalEmail');
+
+// Usar la ruta de correo de agradecimiento
+app.use('/api', sendFinalEmail);
+
 // Usar la ruta de subir archivos
 app.use('/api', postUploadFiles);
 
