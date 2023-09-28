@@ -4,7 +4,7 @@ USE u_cash_customers;
 -- Create the company_info table
 CREATE TABLE company_info (
      nit VARCHAR(20) PRIMARY KEY,
-     company_name VARCHAR(255) NOT NULL,
+     company_name VARCHAR(255) NOT NULL UNIQUE,
      kind_of_society VARCHAR(50),
      code_telephone VARCHAR (5),
      telephone VARCHAR (20),

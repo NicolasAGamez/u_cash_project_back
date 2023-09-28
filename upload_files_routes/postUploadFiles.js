@@ -3,125 +3,133 @@ const multer = require('multer');
 const { google } = require('googleapis');
 const path = require('path');
 const fs = require('fs');
-const router = express.Router(); 
+const router = express.Router();
 const mysql = require('mysql2');
+const cors = require('cors');
 
-// configuración de la base de datos MySQL
+// Configuration of the MySQL database
 const dbConfig = {
-    host: 'localhost',
-    port: 3306,
-    user: 'root', 
-    password: 'eHrZp*H0358w',
-    database: 'u_cash_customers',
-  };
-  
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: 'eHrZp*H0358w',
+  database: 'u_cash_customers',
+};
+
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
-    console.error('Error conectando con el servidor:', err);
+    console.error('Error connecting to the server:', err);
   } else {
-    console.log('Conexión con el servidor UploadFilesPOST MySQL realizada!');
+    console.log('Connection to the UploadFilesPOST MySQL server established!');
   }
 });
 
-// Configuración de Multer para manejar cargas de archivos
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// Configure Multer to handle file uploads
+const storage = multer.diskStorage({
+    destination:'uploads',
+    filename: function(req, file, callback){
+      const extension = file.originalname.split(".").pop()
+      callback(null, `${file.fieldname}-${Date.now()}.${extension}`)
+    }
+    
+})
 
-const scope = ['https://www.googleapis.com/auth/drive'];
+const upload = multer({storage:storage})
 
-// Credenciales Google Drive API 
-const credentials = require('../apikey.json');
-const drive = google.drive('v3');
-const auth = new google.auth.JWT(
-  credentials.client_email,
-  null,
-  credentials.private_key,
-  scope
-);
+router.use(cors())
 
 // POST UPLOAD FILES API
-router.post('/upload', upload.array('documents'), async (req, res) => {
+router.post('/upload', upload.array('files'), async (req, res) => {
   try {
-    // Autenticar con la API de Google Drive
-    await auth.authorize();
-
-    // Especifica el nombre de la carpeta del cliente (puedes reemplazarlo con el nombre real del cliente)
-    const clientFolderName = 'ClientName';
-
-    // Comprueba si la carpeta principal existe en Google Drive
-    const parentFolderId = '1xLlwOuHjEAMcYNBMLxQdc9NnTSXsHTFW'; 
-    const folderQuery = `'${parentFolderId}' in parents and name='${clientFolderName}' and mimeType='application/vnd.google-apps.folder'`;
-    const folderResponse = await drive.files.list({
-      auth,
-      q: folderQuery,
-      fields: 'files(id)',
+    const auth = new google.auth.GoogleAuth({
+      keyFile:
+        'C:/Users/Nizaru/Downloads/ILAB/U-CASH/database-project/upload_files_routes/apikey.json',
+      scopes: ['https://www.googleapis.com/auth/drive'],
     });
 
-    let clientFolderId;
+    const drive = google.drive({
+      version: 'v3',
+      auth,
+    });
 
-    // Si la carpeta no existe, la creamos
-    if (folderResponse.data.files.length === 0) {
-      const clientFolderMetadata = {
-        name: clientFolderName,
-        mimeType: 'application/vnd.google-apps.folder',
-        parents: [parentFolderId],
-      };
+    const uploadedFiles = [];
 
-      const createFolderResponse = await drive.files.create({
-        auth,
-        resource: clientFolderMetadata,
-        fields: 'id',
-      });
+    // Obtener el nombre de la carpeta desde la solicitud
+    const folderName = req.body.folderName || 'Prueba'; // Valor predeterminado "Prueba" si no se proporciona
 
-      clientFolderId = createFolderResponse.data.id;
-      console.log('Client folder created:', clientFolderName);
+    // Buscar si ya existe una carpeta con el mismo nombre
+    const existingFolders = await drive.files.list({
+      q: `mimeType='application/vnd.google-apps.folder' and name='${folderName}' and trashed=false`,
+    });
+
+    let folderMetadata;
+
+    if (existingFolders.data.files.length > 0) {
+      // Use the first existing folder with the same name
+      folderMetadata = existingFolders.data.files[0];
     } else {
-      // La carpeta ya existe
-      clientFolderId = folderResponse.data.files[0].id;
-      console.log('Client folder found:', clientFolderName);
-    }
-
-    // Establece permisos para la carpeta para permitir que cualquier persona con el enlace pueda editar
-    await drive.permissions.create({
-      auth,
-      fileId: clientFolderId,
-      resource: {
-        type: 'anyone',
-        role: 'writer',
-      },
-    });
-
-    // Itera sobre los archivos subidos y súbelos a la carpeta del cliente en Google Drive
-    for (const file of req.files) {
-      const media = {
-        mimeType: file.mimetype,
-        body: file.buffer,
-      };
-
-      const fileMetadata = {
-        name: file.originalname,
-        parents: [clientFolderId],
-      };
-
-      await drive.files.create({
-        auth,
-        resource: fileMetadata,
-        media: media,
-        fields: 'id',
+      // Create a new folder with the specified name if it doesn't exist
+      folderMetadata = await drive.files.create({
+        requestBody: {
+          name: folderName,
+          mimeType: 'application/vnd.google-apps.folder',
+          parents: ['1cSmIynY00SUPWBCWeI7LKW0vyOBAwiBJ'], // ID de la carpeta padre
+        },
       });
 
-      console.log('Uploaded file:', file.originalname);
+      // Una vez creada la carpeta, puedes obtener su metadata nuevamente para asegurarte de tener el ID
+      folderMetadata = folderMetadata.data;
     }
 
-    // Responde con el ID de la carpeta
-    res.status(200).json({
-      parentFolderId: parentFolderId,
-      clientFolderId: clientFolderId,
-    });
+    for (let i = 0; i < req.files.length; i++) {
+      const file = req.files[i];
+
+      console.log('File path:', file.path);
+
+      const response = await drive.files.create({
+        requestBody: {
+          name: file.originalname,
+          mimeType: file.mimeType,
+          parents: [folderMetadata.id], // ID de la carpeta
+        },
+
+        media: {
+          body: fs.createReadStream(file.path),
+        },
+      });
+      uploadedFiles.push(response.data);
+    }
+
+    // Generate the URL of the folder where files were saved
+    const folderUrl = 'https://drive.google.com/drive/folders';
+
+    console.log('Uploaded files:', uploadedFiles);
+    console.log('Folder ID:', folderMetadata.id);
+
+    // Concatenate folderUrl and folderMetadata.id into a single variable
+    const folderUrlWithId = folderUrl + '/' + folderMetadata.id;
+    console.log('Folder URL:', folderUrlWithId);
+
+    // Insertar detalles en la base de datos
+    const nameFolder = req.body.folderName || 'Prueba';
+  
+    // Configura la conexión de base de datos
+    const dbConnection = await mysql.createConnection(dbConfig);
+
+    // Inserta los detalles en la tabla documents
+    await dbConnection.execute(
+      'INSERT INTO documents (name, url_documents) VALUES (?, ?)',
+      [nameFolder, folderUrlWithId]
+    );
+
+    // Cierra la conexión de base de datos
+    await dbConnection.end();
+
+    res.json({ files: uploadedFiles, folderUrlWithId }); // Include the folder URL in the response
   } catch (error) {
-    console.error('Error uploading files:', error);
-    res.status(500).send('Internal Server Error');
+    console.log(error);
   }
 });
 

@@ -56,6 +56,8 @@ const putSurveyRates = require('./survey_rates_routes/putSurveyRates');
 
 // Incluir ruta de subir archivos
 const postUploadFiles = require('./upload_files_routes/postUploadFiles');
+const getUploadFiles = require('./upload_files_routes/getUploadFiles');
+const deleteUploadFiles = require('./upload_files_routes/deleteUploadFiles');
 
 // Incluir ruta de correo de agradecimiento
 const sendFinalEmail = require('./routes/sendFinalEmail');
@@ -65,6 +67,8 @@ app.use('/api', sendFinalEmail);
 
 // Usar la ruta de subir archivos
 app.use('/api', postUploadFiles);
+app.use('/api', getUploadFiles);
+app.use('/api', deleteUploadFiles);
 
 // Usar la ruta de intereses
 app.use('/api', getInterest);
