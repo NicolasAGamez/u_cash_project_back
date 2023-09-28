@@ -27,8 +27,9 @@ SELECT * FROM company_info;
 SELECT * FROM contract_info;
 SELECT * FROM customers_references;
 SELECT * FROM calculator_info;
-SELECT * FROM customers_rates_survey;
 SELECT * FROM documents;
+SELECT * FROM customers_rates_survey;
+
 
 
 
