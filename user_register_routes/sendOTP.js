@@ -1,21 +1,21 @@
 const nodemailer = require('nodemailer');
 const mysql = require('mysql2');
 
-// Function to generate a random OTP
+// Función para generar el OTP
 function generateOTP() {
-  return Math.floor(100000 + Math.random() * 900000); // 6-digit OTP
+  return Math.floor(100000 + Math.random() * 900000); // 6 dígitos
 }
 
-// Function to send OTP via email
+// Función para enviar el OTP
 function sendOTPToEmail(email) {
   const otp = generateOTP();
 
-  // Replace these SMTP configurations with your own email provider settings
+  // Configuración del email 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'nicolas@ilab.digital', // Replace with your Gmail email address
-      pass: 'bvqirrvixgpdsyvj', // Replace with your Gmail app password
+      user: 'nicolas@ilab.digital',
+      pass: 'bvqirrvixgpdsyvj',
     }
   });
 
@@ -32,7 +32,7 @@ function sendOTPToEmail(email) {
     } else {
       console.log('OTP sent:', info.response);
 
-      // Insert the OTP and email into the OTP verification table
+      // configuración de la base de datos MySQL
       const dbConfig = {
         host: 'localhost',
         port: 3306,
@@ -51,7 +51,7 @@ function sendOTPToEmail(email) {
           console.log('OTP inserted into the database:', result);
         }
 
-        connection.end(); // Close the database connection
+        connection.end();
       });
     }
   });

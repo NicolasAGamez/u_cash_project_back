@@ -11,16 +11,18 @@ const dbConfig = {
     database: 'u_cash_customers',
   };
 
-  const connection = mysql.createConnection(dbConfig);
+// Establecer conexión con el servidor MySQL  
+const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor referencesGET MySQL realizada!');
+    console.log('Conexión GetReferences realizada');
   }
 });
 
-// GET API para referencias
+// GET API para obtener la información de las referencias por parte de los clientes 
 router.get('/references', (req, res) => {
   const sql = 'SELECT * FROM customers_references';
   connection.query(sql, (err, results) => {

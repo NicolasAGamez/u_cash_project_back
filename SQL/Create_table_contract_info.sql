@@ -1,5 +1,7 @@
+-- Cambiar a la base de datos principal
 USE u_cash_customers;
 
+-- Crear la tabla de datos de contratos
 CREATE TABLE contract_info (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nit VARCHAR (20),
@@ -14,4 +16,7 @@ CREATE TABLE contract_info (
 
 SELECT * FROM contract_info;
 DELETE FROM contract_info;
+
+ALTER TABLE contract_info AUTO_INCREMENT = 1;
+
 DROP TABLE contract_info;

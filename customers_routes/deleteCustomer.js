@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor DELETE MySQL realizada!');
+    console.log('Conexión DeleteCustomer realizada');
   }
 });
 
-// DELETE API por customer ID
+// DELETE API para borrar los datos de los clientes por Id
 router.delete('/delete/:id', (req, res) => {
   const customerId = req.params.id;
   const sql = 'DELETE FROM customers WHERE id = ?';

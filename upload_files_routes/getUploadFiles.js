@@ -11,16 +11,18 @@ const dbConfig = {
     database: 'u_cash_customers',
   };
 
-  const connection = mysql.createConnection(dbConfig);
+// Establecer conexión con el servidor MySQL
+const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor uploadFilesGET MySQL realizada!');
+    console.log('Conexión GetUploadFiles realizada');
   }
 });
 
-// Servicio GET para obtener todos los registros
+// GET API para obtener la información de los documentos subidos a Google Drive
 router.get('/uploaded-files', (req, res) => {
     const sql = 'SELECT * FROM documents';
     connection.query(sql, (err, results) => {

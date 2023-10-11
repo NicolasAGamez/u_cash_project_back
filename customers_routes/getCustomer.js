@@ -11,22 +11,24 @@ const dbConfig = {
     database: 'u_cash_customers',
   };
 
-  const connection = mysql.createConnection(dbConfig);
+// Establecer conexión con el servidor MySQL  
+const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor GET MySQL realizada!');
+    console.log('Conexión GetCustomer realizada');
   }
 });
 
-// GET API
+// GET API para obtener la información de los clientes 
 router.get('/customers', (req, res) => {
   const sql = 'SELECT * FROM customers';
   connection.query(sql, (err, results) => {
     if (err) {
-      console.error('Error obteniendo datos del servidor:', err);
-      return res.status(500).json({ error: 'Error obteniendo datos del servidor' });
+      console.error('Error obteniendo datos de usuarios del servidor:', err);
+      return res.status(500).json({ error: 'Error obteniendo datos de usuarios del servidor' });
     }
     return res.status(200).json(results);
   });

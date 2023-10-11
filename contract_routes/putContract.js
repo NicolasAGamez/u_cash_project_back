@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor ContractPUT MySQL realizada!');
+    console.log('Conexión PutContract realizada');
   }
 });
 
-// PUT CONTRACT API by NIT
+// PUT API para actualizar los datos de los contratos por Nit
 router.put('/contract/:nit', (req, res) => {
     const contractNit = req.params.nit;
     const updatedContract = req.body;
@@ -29,7 +31,7 @@ router.put('/contract/:nit', (req, res) => {
     const values = [];
 
     for (const key in updatedContract) {
-        if (key !== 'nit') { // Exclude the nit field from updates
+        if (key !== 'nit') { 
             sql += ` ${key} = ?,`;
             values.push(updatedContract[key]);
         }
@@ -39,7 +41,7 @@ router.put('/contract/:nit', (req, res) => {
         return res.status(400).json({ error: 'No se proporcionaron campos válidos para la actualización' });
     }
 
-    sql = sql.slice(0, -1); // Remove the trailing comma
+    sql = sql.slice(0, -1);
     sql += ' WHERE nit = ?';
     values.push(contractNit);
 

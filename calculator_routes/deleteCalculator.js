@@ -4,23 +4,25 @@ const mysql = require('mysql2');
 
 // configuración de la base de datos MySQL
 const dbConfig = {
-    host: 'localhost',
-    port: 3306,
-    user: 'root', 
-    password: 'eHrZp*H0358w', 
-    database: 'u_cash_customers',
-  };
+  host: 'localhost',
+  port: 3306,
+  user: 'root', 
+  password: 'eHrZp*H0358w', 
+  database: 'u_cash_customers',
+};
 
-  const connection = mysql.createConnection(dbConfig);
-  connection.connect((err) => {
-    if (err) {
-      console.error('Error conectando con la base de datos', err);
-    } else {
-      console.log('Conexión con el servidor CalculatorDELETE MySQL realizada!');
-    }
-  });
+// Establecer conexión con el servidor MySQL
+const connection = mysql.createConnection(dbConfig);
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Error conectando con la base de datos', err);
+  } else {
+    console.log('Conexión DeleteCalculator realizada');
+  }
+});
   
-// DELETE CALCULATOR API POR customerId
+// DELETE API para borrar los datos de la calculadora por CustomerId
   router.delete('/calculator-info/:customerId', (req, res) => {
     const calculatorCustomerId = req.params.customerId;
     const sql = 'DELETE FROM calculator_info WHERE customerId = ?';

@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor surveyRatesPUT MySQL realizada!');
+    console.log('Conexión PutSurveyRates realizada');
   }
 });
 
-// PUT CONTRACT API by NIT
+// PUT API para actualizar los datos de la calificación por parte de los clientes por CC
 router.put('/survey-rates/:cc', (req, res) => {
     const surveyCC = req.params.cc;
     const updatedSurvey = req.body;
@@ -39,7 +41,7 @@ router.put('/survey-rates/:cc', (req, res) => {
         return res.status(400).json({ error: 'No se proporcionaron campos válidos para la actualización' });
     }
 
-    sql = sql.slice(0, -1); // Remove the trailing comma
+    sql = sql.slice(0, -1); 
     sql += ' WHERE cc = ?';
     values.push(surveyCC);
 

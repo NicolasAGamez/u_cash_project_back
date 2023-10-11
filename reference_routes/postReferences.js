@@ -11,19 +11,21 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor referencesPOST MySQL realizada!');
+    console.log('Conexión PostReferences realizada');
   }
 });
 
 
-// POST API para referencias
+// POST API para la información de las referencias por parte del cliente
 router.post('/references', (req, res) => {
-    const formData = req.body; // Form data sent as a JSON object
+    const formData = req.body;
     const reference1Values = [formData.cc, formData.nameReference1, formData.cellNumberReference1, formData.emailReference1];
 
    // Consulta SQL para verificar duplicados en cualquiera de las columnas

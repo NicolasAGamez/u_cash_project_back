@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor CompanyPUT MySQL realizada!');
+    console.log('Conexión PutCompany realizada');
   }
 });
 
-// PUT COMPANY API by NIT
+// PUT API para actualizar los datos de las empresas por NIT
 router.put('/company/:nit', (req, res) => {
     const companyNit = req.params.nit;
     const updatedCompany = req.body;
@@ -29,7 +31,7 @@ router.put('/company/:nit', (req, res) => {
     const values = [];
 
     for (const key in updatedCompany) {
-        if (key !== 'nit') { // Exclude the nit field from updates
+        if (key !== 'nit') {
             sql += ` ${key} = ?,`;
             values.push(updatedCompany[key]);
         }
@@ -39,7 +41,7 @@ router.put('/company/:nit', (req, res) => {
         return res.status(400).json({ error: 'No se proporcionaron campos válidos para la actualización' });
     }
 
-    sql = sql.slice(0, -1); // Remove the trailing comma
+    sql = sql.slice(0, -1); 
     sql += ' WHERE nit = ?';
     values.push(companyNit);
 

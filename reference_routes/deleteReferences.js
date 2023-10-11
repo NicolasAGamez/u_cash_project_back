@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor referencesDELETE MySQL realizada!');
+    console.log('Conexión DeleteReferences realizada');
   }
 });
 
-// DELETE API por referencia ID
+// DELETE API para borrar los datos de las referencias dadas por parte de los clientes por Id
 router.delete('/references/:referenceId', (req, res) => {
     const referenceId = req.params.referenceId;
   

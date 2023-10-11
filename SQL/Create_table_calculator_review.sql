@@ -1,6 +1,7 @@
--- Switch to the created database
+-- Cambiar a la base de datos principal
 USE u_cash_customers;
 
+-- Crear la tabla de datos de calculadora alivio financiero
 CREATE TABLE calculator_info (
     customerId VARCHAR(30) PRIMARY KEY,
     person_type VARCHAR (20),
@@ -22,31 +23,9 @@ CREATE TABLE calculator_info (
     fourthPaymentCredit DECIMAL(20, 2)
 );
 
-SELECT * FROM customers;
-SELECT * FROM company_info;
-SELECT * FROM contract_info;
-SELECT * FROM customers_references;
 SELECT * FROM calculator_info;
-SELECT * FROM documents;
-SELECT * FROM customers_rates_survey;
-
-
-
-
-DELETE FROM customers;
-DELETE FROM company_info;
-DELETE FROM contract_info;
-DELETE FROM customers_references;
 DELETE FROM calculator_info;
-DELETE FROM customers_rates_survey;
-DELETE FROM documents;
 
-
-
-ALTER TABLE customers AUTO_INCREMENT = 1;
-ALTER TABLE company_info AUTO_INCREMENT = 1;
-ALTER TABLE contract_info AUTO_INCREMENT = 1;
-ALTER TABLE customers_references AUTO_INCREMENT = 1;
 ALTER TABLE calculator_info AUTO_INCREMENT = 1;
-ALTER TABLE customers_rates_survey AUTO_INCREMENT = 1;
-ALTER TABLE documents AUTO_INCREMENT = 1;
+
+DROP TABLE calculator_info;

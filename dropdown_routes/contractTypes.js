@@ -16,11 +16,11 @@ connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor ContractTypeGET MySQL realizada!');
+    console.log('Conexión GetContractType realizada');
   }
 });
 
-// GET CONTRACT TYPE API
+// GET API para obtener los tipos de contratos
 router.get('/contract-type', (req, res) => {
     const sql = 'SELECT * FROM contract_types';
     connection.query(sql, (err, results) => {

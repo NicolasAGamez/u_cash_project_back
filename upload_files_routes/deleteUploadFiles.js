@@ -16,19 +16,19 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
 
 connection.connect((err) => {
   if (err) {
     console.error('Error connecting to the server:', err);
   } else {
-    console.log('Connection to the UploadFilesDELETE MySQL server established!');
+    console.log('Conexión DeleteUploadFiles realizada');
   }
 });
 
-
-// Servicio DELETE para eliminar un archivo o carpeta de Google Drive y la base de datos
-router.delete('/delete/:url_documents', async (req, res) => {
+// DELETE API para borrar los datos de los documentos subidos a Google Drive por Url
+router.delete('/delete-document/:url_documents', async (req, res) => {
     try {
       const urlDocumentsToDelete = req.params.url_documents;
   

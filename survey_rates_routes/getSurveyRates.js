@@ -11,16 +11,18 @@ const dbConfig = {
     database: 'u_cash_customers',
   };
 
-  const connection = mysql.createConnection(dbConfig);
+// Establecer conexión con el servidor MySQL
+const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor surveyRatesGET MySQL realizada!');
+    console.log('Conexión GetSurveyRates realizada');
   }
 });
 
-// GET API para referencias
+// GET API  para la recolección de la calificación por parte del cliente
 router.get('/survey-rates', (req, res) => {
   const sql = 'SELECT * FROM customers_rates_survey';
   connection.query(sql, (err, results) => {

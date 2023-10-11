@@ -4,23 +4,25 @@ const mysql = require('mysql2');
 
 // configuración de la base de datos MySQL
 const dbConfig = {
-    host: 'localhost',
-    port: 3306,
-    user: 'root', 
-    password: 'eHrZp*H0358w', 
-    database: 'u_cash_customers',
-  };
+  host: 'localhost',
+  port: 3306,
+  user: 'root', 
+  password: 'eHrZp*H0358w', 
+  database: 'u_cash_customers',
+};
 
-  const connection = mysql.createConnection(dbConfig);
-  connection.connect((err) => {
-    if (err) {
-      console.error('Error conectando con la base de datos', err);
-    } else {
-      console.log('Conexión con el servidor ContractDELETE MySQL realizada!');
-    }
-  });
+// Establecer conexión con el servidor MySQL
+const connection = mysql.createConnection(dbConfig);
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Error conectando con la base de datos', err);
+  } else {
+    console.log('Conexión DeleteContract realizada');
+  }
+});
   
-// DELETE COMPANY API POR NIT
+// DELETE API para borrar los datos de los contratos por Nit
   router.delete('/contract/:nit', (req, res) => {
     const companyNit = req.params.nit;
     const sql = 'DELETE FROM contract_info WHERE nit = ?';

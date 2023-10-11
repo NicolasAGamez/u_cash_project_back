@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor CalculatorGET MySQL realizada!');
+    console.log('Conexión GetCalculator realizada');
   }
 });
 
-// GET CALCULATOR API
+// GET API para obtener la información de la calculadora
 router.get('/calculator-info', (req, res) => {
     const sql = 'SELECT * FROM calculator_info';
     connection.query(sql, (err, results) => {

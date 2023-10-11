@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor ContractPOST MySQL realizada!');
+    console.log('Conexión PostContract realizada');
   }
 });
 
-// POST CONTRACT API
+// POST API para los datos de los contratos
 router.post('/contract', (req, res) => {
     const newContract = req.body;
     const {

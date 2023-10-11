@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor surveyRatesPOST MySQL realizada!');
+    console.log('Conexión PostSurveyRates realizada');
   }
 });
 
-// POST CONTRACT API
+// POST API para la recolección de la calificación por parte del cliente 
 router.post('/survey-rates', (req, res) => {
     const newSurvey = req.body;
     const {

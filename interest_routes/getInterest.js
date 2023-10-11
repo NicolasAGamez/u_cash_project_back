@@ -4,6 +4,7 @@ const cheerio = require('cheerio');
 
 const router = express.Router();
 
+// GET API para obtener la información de la tasa de usura y otros intereses
 router.get('/interest-rates', async (req, res) => {
     try {
         const url = 'https://www.larepublica.co/indicadores-economicos/bancos/tasa-de-usura';

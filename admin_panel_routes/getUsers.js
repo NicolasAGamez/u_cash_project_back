@@ -18,17 +18,17 @@ connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión GetContract realizada');
+    console.log('Conexión GetUsers realizada');
   }
 });
 
-// GET API para obtener la información de los contratos
-router.get('/contract', (req, res) => {
-    const sql = 'SELECT * FROM contract_info';
+// GET API para obtener la información de las empresas
+router.get('/users', (req, res) => {
+    const sql = 'SELECT * FROM application_information';
     connection.query(sql, (err, results) => {
       if (err) {
-        console.error('Error obteniendo datos del contrato del servidor:', err);
-        return res.status(500).json({ error: 'Error obteniendo datos del contrato del servidor' });
+        console.error('Error obteniendo datos de los usuarios del servidor:', err);
+        return res.status(500).json({ error: 'Error obteniendo datos de los usuarios del servidor' });
       }
       return res.status(200).json(results);
     });

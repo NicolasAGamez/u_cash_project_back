@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor CalculatorPUT MySQL realizada!');
+    console.log('Conexión PutCalculator realizada');
   }
 });
 
-// PUT CALCULATOR API by customerId
+// PUT API para actualizar los datos de la calculadora por CustomerId
 router.put('/calculator-info/:customerId', (req, res) => {
     const customerId = req.params.customerId;
     const updatedCalculator = req.body;

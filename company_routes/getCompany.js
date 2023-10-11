@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor CompanyGET MySQL realizada!');
+    console.log('Conexión GetCompany realizada');
   }
 });
 
-// GET COMPANY API
+// GET API para obtener la información de las empresas
 router.get('/company', (req, res) => {
     const sql = 'SELECT * FROM company_info';
     connection.query(sql, (err, results) => {

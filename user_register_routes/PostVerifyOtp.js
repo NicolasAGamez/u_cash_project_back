@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2');
-const { sendOTPToEmail } = require('./sendOTP'); // Import the sendOTP function
 
 
 // configuración de la base de datos MySQL
@@ -13,21 +12,23 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor VERIFY MySQL realizada!');
+    console.log('Conexión PostVerifyOtp realizada');
   }
 });
 
 
-// API endpoint for OTP verification
+// POST API para la verificación del OTP
 router.post('/otpVerification', (req, res) => {
   const { otp, email } = req.body;
 
-  // Check if the email and OTP exist in the otp_verification table
+  // Revisar si el OTP corresponde al guardado en la tabla 
   const query = 'SELECT * FROM otp_verification WHERE email = ? AND otp = ?';
   connection.query(query, [email, otp], (err, result) => {
     if (err) {
@@ -36,10 +37,8 @@ router.post('/otpVerification', (req, res) => {
     }
 
     if (result && result.length > 0) {
-      // OTP verification successful
       return res.status(200).json({ verified: true });
     } else {
-      // OTP verification failed
       console.error('Error, the OTP was not that:', err);
       return res.status(455).json({ verified: false });
     }

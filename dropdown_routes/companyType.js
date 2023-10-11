@@ -11,16 +11,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
+
 connection.connect((err) => {
   if (err) {
     console.error('Error conectando con el servidor:', err);
   } else {
-    console.log('Conexión con el servidor CompanyTypeGET MySQL realizada!');
+    console.log('Conexión GetCompanyType realizada');
   }
 });
 
-// GET COMPANY TYPE API
+// GET API para obtener los tipos de empresas
 router.get('/type', (req, res) => {
     const sql = 'SELECT * FROM company_types';
     connection.query(sql, (err, results) => {

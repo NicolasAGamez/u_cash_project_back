@@ -7,12 +7,12 @@ router.use(bodyParser.json());
 
 // Función para enviar el correo de agradecimiento
 function sendThankYouEmail(email) {
-  // Configura las credenciales SMTP con tu proveedor de correo electrónico
+  // Configurar las credenciales SMTP con tu proveedor de correo electrónico
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'nicolas@ilab.digital', // Reemplaza con tu dirección de correo electrónico de Gmail
-      pass: 'bvqirrvixgpdsyvj', // Reemplaza con tu contraseña de la aplicación Gmail
+      user: 'nicolas@ilab.digital', 
+      pass: 'bvqirrvixgpdsyvj',
     },
   });
 
@@ -51,7 +51,7 @@ function sendThankYouEmail(email) {
   });
 }
 
-// Endpoint para enviar el correo de agradecimiento
+// POST API para enviar el correo de agradecimiento
 router.post('/enviar-correo-agradecimiento', (req, res) => {
   const { email } = req.body;
   if (!email) {

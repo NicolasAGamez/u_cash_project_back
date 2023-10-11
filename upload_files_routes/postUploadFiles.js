@@ -7,7 +7,7 @@ const router = express.Router();
 const mysql = require('mysql2');
 const cors = require('cors');
 
-// Configuration of the MySQL database
+// Configuración de la base de datos MySQL
 const dbConfig = {
   host: 'localhost',
   port: 3306,
@@ -16,17 +16,18 @@ const dbConfig = {
   database: 'u_cash_customers',
 };
 
+// Establecer conexión con el servidor MySQL
 const connection = mysql.createConnection(dbConfig);
 
 connection.connect((err) => {
   if (err) {
     console.error('Error connecting to the server:', err);
   } else {
-    console.log('Connection to the UploadFilesPOST MySQL server established!');
+    console.log('Conexión PostUploadFiles realizada');
   }
 });
 
-// Configure Multer to handle file uploads
+// Configurar Multer para manejar la carga de archivos
 const storage = multer.diskStorage({
     destination:'uploads',
     filename: function(req, file, callback){
@@ -40,7 +41,7 @@ const upload = multer({storage:storage})
 
 router.use(cors())
 
-// POST UPLOAD FILES API
+// POST API para la guardar los documentos en Google Drive
 router.post('/upload', upload.array('files'), async (req, res) => {
   try {
     const auth = new google.auth.GoogleAuth({
@@ -67,10 +68,10 @@ router.post('/upload', upload.array('files'), async (req, res) => {
     let folderMetadata;
 
     if (existingFolders.data.files.length > 0) {
-      // Use the first existing folder with the same name
+      // Si ya existe una carpeta con el mismo nombre, usar la ya creada
       folderMetadata = existingFolders.data.files[0];
     } else {
-      // Create a new folder with the specified name if it doesn't exist
+      // Crea una nueva carpeta con el nombre especificado si no existe
       folderMetadata = await drive.files.create({
         requestBody: {
           name: folderName,
@@ -79,7 +80,6 @@ router.post('/upload', upload.array('files'), async (req, res) => {
         },
       });
 
-      // Una vez creada la carpeta, puedes obtener su metadata nuevamente para asegurarte de tener el ID
       folderMetadata = folderMetadata.data;
     }
 
@@ -102,32 +102,32 @@ router.post('/upload', upload.array('files'), async (req, res) => {
       uploadedFiles.push(response.data);
     }
 
-    // Generate the URL of the folder where files were saved
+    // Generar la URL de la carpeta donde se guardaron los archivos
     const folderUrl = 'https://drive.google.com/drive/folders';
 
     console.log('Uploaded files:', uploadedFiles);
     console.log('Folder ID:', folderMetadata.id);
 
-    // Concatenate folderUrl and folderMetadata.id into a single variable
+    // Concatenar carpetaUrl y carpetaMetadata.id en una sola variable
     const folderUrlWithId = folderUrl + '/' + folderMetadata.id;
     console.log('Folder URL:', folderUrlWithId);
 
     // Insertar detalles en la base de datos
     const nameFolder = req.body.folderName || 'Prueba';
   
-    // Configura la conexión de base de datos
+    // Configurar la conexión de base de datos
     const dbConnection = await mysql.createConnection(dbConfig);
 
-    // Inserta los detalles en la tabla documents
+    // Insertar la información en la tabla documents
     await dbConnection.execute(
       'INSERT INTO documents (name, url_documents) VALUES (?, ?)',
       [nameFolder, folderUrlWithId]
     );
 
-    // Cierra la conexión de base de datos
+    // Cerrar la conexión de base de datos
     await dbConnection.end();
 
-    res.json({ files: uploadedFiles, folderUrlWithId }); // Include the folder URL in the response
+    res.json({ files: uploadedFiles, folderUrlWithId }); // Incluir la URL de la carpeta en la respuesta
   } catch (error) {
     console.log(error);
   }

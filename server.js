@@ -8,12 +8,15 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Incluir las rutas
-const postRoute = require('./routes/postRoute');
-const deleteRoute = require('./routes/deleteRoute');
-const getRoute = require('./routes/getRoute');
-const putRoute = require('./routes/putRoute');
-const emailRoute = require('./routes/emailRoute');
+// Incluir las rutas de registro de usuarios
+const postUserRegister = require('./user_register_routes/postUserRegister');
+
+// Incluir las rutas de clientes
+const postCustomer = require('./customers_routes/postCustomer');
+const deleteCustomer = require('./customers_routes/deleteCustomer');
+const getCustomer = require('./customers_routes/getCustomer');
+const putCustomer = require('./customers_routes/putCustomer');
+const postVerifyOtp = require('./user_register_routes/PostVerifyOtp');
 
 // Incluir rutas de empresas
 const postCompany = require('./company_routes/postCompany');
@@ -61,7 +64,13 @@ const deleteUploadFiles = require('./upload_files_routes/deleteUploadFiles');
 const eliminar = require('./upload_files_routes/eliminar');
 
 // Incluir ruta de correo de agradecimiento
-const sendFinalEmail = require('./routes/sendFinalEmail');
+const sendFinalEmail = require('./customers_routes/sendFinalEmail');
+
+// Incluir rutas del panel administrativo
+const getUsers = require('./admin_panel_routes/getUsers');
+
+// Usar la rutas del panel administrativo
+app.use('/api', getUsers);
 
 // Usar la ruta de correo de agradecimiento
 app.use('/api', sendFinalEmail);
@@ -111,15 +120,17 @@ app.use('/api', deleteCompany);
 app.use('/api', getCompany);
 app.use('/api', putCompany);
 
-// Usar las rutas
-app.use('/api', postRoute);
-app.use('/api', deleteRoute);
-app.use('/api', getRoute);
-app.use('/api', putRoute);
-app.use('/api', emailRoute);
+// Usar las rutas de clientes
+app.use('/api', postCustomer);
+app.use('/api', deleteCustomer);
+app.use('/api', getCustomer);
+app.use('/api', putCustomer);
+app.use('/api', postVerifyOtp);
 
+// Usar las rutas de clientes
+app.use('/api', postUserRegister);
 
 // Iniciar el servidor
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Servidor funcionando en el puerto: ${port}`);
 });

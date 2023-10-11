@@ -17,11 +17,10 @@ CREATE TABLE customers (
     person_type VARCHAR (10)
 );
 
--- Agregar un índice en la columna de nombre para mejorar el rendimiento de las consultas
-CREATE INDEX idx_customers_name ON customers(name);
-
-
 SELECT * FROM customers;
 DELETE FROM customers;
 
+ALTER TABLE customers AUTO_INCREMENT = 1;
+
+DROP TABLE customers;
 
