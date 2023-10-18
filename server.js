@@ -67,10 +67,16 @@ const eliminar = require('./upload_files_routes/eliminar');
 const sendFinalEmail = require('./customers_routes/sendFinalEmail');
 
 // Incluir rutas del panel administrativo
+const postUsers = require('./admin_panel_routes/postUsers');
 const getUsers = require('./admin_panel_routes/getUsers');
+const deleteUsers = require('./admin_panel_routes/deleteUsers');
+const putUsers = require('./admin_panel_routes/putUsers');
 
 // Usar la rutas del panel administrativo
+app.use('/api', postUsers);
 app.use('/api', getUsers);
+app.use('/api', deleteUsers);
+app.use('/api', putUsers);
 
 // Usar la ruta de correo de agradecimiento
 app.use('/api', sendFinalEmail);
