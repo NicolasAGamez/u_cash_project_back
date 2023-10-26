@@ -6,6 +6,7 @@ const fs = require('fs');
 const router = express.Router();
 const mysql = require('mysql2');
 const cors = require('cors');
+const axios = require('axios');
 
 // Configuración de la base de datos MySQL
 const dbConfig = {
@@ -44,9 +45,10 @@ router.use(cors())
 // POST API para la guardar los documentos en Google Drive
 router.post('/upload', upload.array('files'), async (req, res) => {
   try {
+    const keyFile = path.join(__dirname, 'apikey.json');
+
     const auth = new google.auth.GoogleAuth({
-      keyFile:
-        'C:/Users/Nizaru/Downloads/ILAB/U-CASH/database-project/upload_files_routes/apikey.json',
+      keyFile: keyFile,
       scopes: ['https://www.googleapis.com/auth/drive'],
     });
 
