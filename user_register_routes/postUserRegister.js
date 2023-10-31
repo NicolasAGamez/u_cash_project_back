@@ -5,11 +5,11 @@ const { sendOTPToEmail } = require('./sendOTP'); // Importa la función sendOTPT
 
 // Configuración de la base de datos MySQL
 const dbConfig = {
-  host: 'localhost',
+  host: 'demo-umonei-aws.cbg6k7u60pgo.us-east-2.rds.amazonaws.com',
   port: 3306,
   user: 'root', 
   password: 'eHrZp*H0358w',
-  database: 'u_cash_customers',
+  database: 'db_demo_umonei',
 };
 
 // Establecer conexión con el servidor MySQL
